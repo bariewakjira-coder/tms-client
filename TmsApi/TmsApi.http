@@ -1,4 +1,13 @@
-@TmsApi_HostAddress = http://localhost:5049
+@hostname = http://localhost:5049
 
 
+###
+### Test Case 1: Anonymous Request (Should return 401 Unauthorized)
+GET {{hostname}}/api/assessments/results
+
+###
+
+### Test Case 2: Authenticated Request (Should return 200 OK with JSON)
+GET {{hostname}}/api/assessments/results
+X-Training-User: user1
 ###
