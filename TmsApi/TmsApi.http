@@ -11,3 +11,8 @@ GET {{hostname}}/api/assessments/results
 GET {{hostname}}/api/assessments/results
 X-Training-User: user1
 ###
+### Test Case 3: Worker Smoke Test
+###
+GET {{hostname}}/api/enrollments/worker-smoke
+X-Training-User: user2
+###

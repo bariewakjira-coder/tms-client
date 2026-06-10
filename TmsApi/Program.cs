@@ -12,6 +12,24 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 
+// --- Exercise 2 Registrations ---
+builder.Services.AddSingleton<EnrollmentWorker>();
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+
+
+// --- Strict Host Validation ---
+builder.Host.UseDefaultServiceProvider(options =>
+{
+    options.ValidateScopes = true;
+    options.ValidateOnBuild = true;
+});
+// --- Exercise 3: Options Pattern Validation ---
+builder.Services.AddOptions<PaymentOptions>()
+    .BindConfiguration("Payments")
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+
 var app = builder.Build();
 // Registration Order
 app.UseMiddleware<RequestLoggingMiddleware>();
@@ -33,5 +51,11 @@ app.MapGet("/api/assessments/results", () => Results.Ok(new
     letterGrade = "A"
 }))
 .RequireAuthorization(); 
+app.MapGet("/api/enrollments/worker-smoke", (EnrollmentWorker worker) =>
+{
+    worker.ProcessBatch();
+    return Results.Ok("processed");
+});
+
 
 app.Run();
