@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 // --- The contract ---
 public interface IEnrollmentService
@@ -113,3 +108,5 @@ public Task<bool> DeleteAsync(string id)
 
 // --- The data shape ---
 public record EnrollmentRecord(string Id, string StudentId, string CourseCode, DateTime EnrolledAt);
+public class TmsDatabaseException(string message) : Exception(message);
+

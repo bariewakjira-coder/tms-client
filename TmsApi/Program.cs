@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Register authentication and authorization services
@@ -9,12 +10,16 @@ builder.Services.AddAuthorization();
 
 // Add services to the container.
 
+
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
-
+builder.Services.AddOpenApi();
 // --- Exercise 2 Registrations ---
-builder.Services.AddSingleton<EnrollmentWorker>();
-builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+// builder.Services.AddSingleton<EnrollmentWorker>();
+// builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+// --- Exercise 2 Registrations ---
+builder.Services.AddSingleton<EnrollmentWorker>(); 
+builder.Services.AddSingleton<IEnrollmentService, EnrollmentService>();
 
 
 // --- Strict Host Validation ---
@@ -31,9 +36,34 @@ builder.Services.AddOptions<PaymentOptions>()
 
 
 var app = builder.Build();
-// Registration Order
+// 1
+// builder.Services.AddProblemDetails();
+
+// // Registration Order
+// app.UseExceptionHandler(); // Placeholder for future modules
+// builder.Services.AddOpenApi();
+
+// //2
+// app.UseStatusCodePages(); 
+
+// TODO 1: Check if the app is running in Development mode
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+    app.UseStatusCodePages();
+
+    // TODO 2: Expose documentation tools in DEV ONLY
+    app.MapOpenApi();              
+    app.MapScalarApiReference();   
+}
+else
+{
+    // TODO 3: In Production, hide docs but mask errors cleanly
+    app.UseExceptionHandler();     
+    app.UseStatusCodePages();      
+}
 app.UseMiddleware<RequestLoggingMiddleware>();
-app.UseExceptionHandler(); // Placeholder for future modules
+
 
 // Configure the HTTP request pipeline.
 
@@ -56,6 +86,12 @@ app.MapGet("/api/enrollments/worker-smoke", (EnrollmentWorker worker) =>
     worker.ProcessBatch();
     return Results.Ok("processed");
 });
+
+app.MapGet("/api/error", () =>
+{
+    throw new TmsDatabaseException("Simulated database failure for ProblemDetails testing");
+});
+
 
 
 app.Run();
