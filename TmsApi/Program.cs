@@ -149,7 +149,148 @@ using (var scope = app.Services.CreateScope())
                 Name = "Evan Wright",
                 GPA = 2.5m,
                 IsActive = true
-            }
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0006",
+                Name = "Joe Doe",
+                GPA = 4.00m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0007",
+                Name = "John Stones",
+                GPA = 3.5m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0008",
+                Name = "Kayl walker",
+                GPA = 1.5m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0009",
+                Name = "Tewodros Abiyu",
+                GPA = 3.5m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0010",
+                Name = "Mesfin Abeje",
+                GPA = 3.3m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0011",
+                Name = "Eden Mogos",
+                GPA = 3.4m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0012",
+                Name = "Yasin Tahir",
+                GPA = 3.6m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0013",
+                Name = "Muluken Showa",
+                GPA = 3.7m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0014",
+                Name = "Azmeraw Tefera",
+                GPA = 3.7m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0015",
+                Name = "Tesema Melaku",
+                GPA = 2.9m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0016",
+                Name = "Demelash Ayele",
+                GPA = 3.1m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0017",
+                Name = "Leyikun Mekonin",
+                GPA = 2.5m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0018",
+                Name = "John Smith",
+                GPA = 3.4m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0019",
+                Name = "John Stones",
+                GPA = 3.3m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0020",
+                Name = "Look Shaw",
+                GPA = 2.2m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0021",
+                Name = "Dagim Sisay",
+                GPA = 3.63m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0022",
+                Name = "Elsa Berihun",
+                GPA = 3.73m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0023",
+                Name = "Eliyas Tamiru",
+                GPA = 3.83m,
+                IsActive = false
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0024",
+                Name = "Yonatan Ejigu",
+                GPA = 3.8m,
+                IsActive = true
+            },
+            new()
+            {
+                RegistrationNumber = "TMS-2026-0025",
+                Name = "Estifanos Sisay",
+                GPA = 2.4m,
+                IsActive = false
+            },
+
         };
 
 
@@ -177,7 +318,73 @@ using (var scope = app.Services.CreateScope())
                 Code = "MAT-101",
                 Title = "Calculus I",
                 Capacity = 40
-            }
+            },
+            new()
+            {
+                Code = "MAT-102",
+                Title = "Calculus II",
+                Capacity = 45
+            },
+            new()
+            {
+                Code = "MAT-103",
+                Title = "Calculus III",
+                Capacity = 30
+            },
+            new()
+            {
+                Code = "THERMO-104",
+                Title = "Thermodynamics",
+                Capacity = 23
+            },
+            new()
+            {
+                Code = "Embeded-105",
+                Title = "Embeded Systems",
+                Capacity = 25
+            },
+            new()
+            {
+                Code = "MAT-106",
+                Title = "Calculus I",
+                Capacity = 40
+            },
+            new()
+            {
+                Code = "Computer-107",
+                Title = "Computer Network-security",
+                Capacity = 45
+            },
+            new()
+            {
+                Code = "C#-108",
+                Title = "C# Programming",
+                Capacity = 34
+            },
+            new()
+            {
+                Code = "Java-109",
+                Title = "Java Programing",
+                Capacity = 42
+            },
+            new()
+            {
+                Code = "typescript-110",
+                Title = "Typescript Programming",
+                Capacity = 28
+            },
+            new()
+            {
+                Code = "Data Structure-111",
+                Title = "Data Structure and Algorithms",
+                Capacity = 40
+            },
+            new()
+            {
+                Code = "SQL-112",
+                Title = "Structured Quesry Languages",
+                Capacity = 58
+            } 
         };
 
 

@@ -64,3 +64,6 @@ Accept: application/json
 GET http://localhost:5049/api/students?page=2
 Accept: application/json
 
+### popular courses
+GET http://localhost:5049/api/students/top-courses
+Accept: application/json

@@ -21,7 +21,7 @@ public class StudentsController : ControllerBase
         int page = 1,
         CancellationToken cancellationToken = default)
     {
-        int pageSize = 20;
+        int pageSize = 5;
 
 
         var students = await context.Students
