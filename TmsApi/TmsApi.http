@@ -49,11 +49,18 @@ Accept: application/problem+json
 ### Test Scalar UI in Dev Mode
 GET http://localhost:5049/scalar/v1
 
-### Test Scalar UI in Prod Mode
+### Test average gpa
 GET http://localhost:5049/api/reports/average-gpa
 Accept: application/json
  
 
  
+### Page 1
+GET http://localhost:5049/api/students?page=1
+Accept: application/json
 
+
+### Page 2
+GET http://localhost:5049/api/students?page=2
+Accept: application/json
 
