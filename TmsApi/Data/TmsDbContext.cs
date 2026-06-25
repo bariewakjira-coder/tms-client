@@ -14,5 +14,28 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.ApplyConfigurationsFromAssembly(
         typeof(TmsDbContext).Assembly
     );
+    modelBuilder.Entity<Student>()
+    .HasQueryFilter(s => !s.IsDeleted);
+    
+    modelBuilder.Entity<Enrollment>()
+    .HasQueryFilter(e => !e.IsArchived);
+}
+
+
+public override async Task<int> SaveChangesAsync(
+    CancellationToken cancellationToken = default)
+{
+    foreach(var entry in ChangeTracker.Entries<Student>())
+    {
+        if(entry.State == EntityState.Modified ||
+           entry.State == EntityState.Added)
+        {
+            entry.Property("LastUpdated")
+                 .CurrentValue = DateTime.UtcNow;
+        }
+    }
+
+
+    return await base.SaveChangesAsync(cancellationToken);
 }
 }

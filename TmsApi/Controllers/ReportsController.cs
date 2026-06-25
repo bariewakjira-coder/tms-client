@@ -70,4 +70,54 @@ public class ReportsController(TmsDbContext context) : ControllerBase
         return Ok(list);
     }
 
+
+// Exercise 7 Part A: Intentional N+1 query
+[HttpGet("n-plus-one")]
+public async Task<IActionResult> NPlusOne(
+    CancellationToken cancellationToken)
+{
+    var students = await context.Students
+        .AsNoTracking()
+        .ToListAsync(cancellationToken);
+
+
+    foreach (var student in students)
+    {
+        var count = await context.Enrollments
+            .AsNoTracking()
+            .CountAsync(
+                e => e.StudentId == student.Id,
+                cancellationToken
+            );
+
+
+        Console.WriteLine(
+            $"{student.Name}: {count} enrollments"
+        );
+    }
+
+
+    return Ok("Check console SQL logs");
 }
+
+
+
+// Exercise 7 Part B: Fixed shaped query
+[HttpGet("student-enrollment-report")]
+public async Task<IActionResult> StudentEnrollmentReport(
+    CancellationToken cancellationToken)
+{
+    var report = await context.Students
+        .AsNoTracking()
+        .Select(s => new
+        {
+            s.Name,
+            EnrollmentCount = s.Enrollments.Count
+        })
+        .ToListAsync(cancellationToken);
+
+
+    return Ok(report);
+}
+}
+

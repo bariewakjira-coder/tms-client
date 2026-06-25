@@ -10,6 +10,9 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
         builder.HasKey(s => s.Id);
 
+
+        builder.HasQueryFilter(s => !s.IsDeleted);
+
         builder.Property(s => s.RegistrationNumber)
             .IsRequired()
             .HasMaxLength(50);
@@ -20,5 +23,11 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
 
         builder.Property(s => s.GPA)
             .HasPrecision(3,2);
+            
+              builder.Property(s => s.Version)
+           .IsRowVersion();
+
+           builder.Property<DateTime>("LastUpdated");
+
     }
 }

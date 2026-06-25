@@ -67,3 +67,26 @@ Accept: application/json
 ### popular courses
 GET http://localhost:5049/api/students/top-courses
 Accept: application/json
+
+
+### popular courses
+GET http://localhost:5049/api/reports/n-plus-one
+
+### popular courses
+GET http://localhost:5049/api/reports/student-enrollment-report
+
+### popular courses
+GET http://localhost:5049/api/students/1
+
+
+### popular courses
+PUT http://localhost:5049/api/students/1
+Content-Type: application/json
+
+{
+  "name": "Alice Updated",
+  "gpa": 4.0
+}
+
+### Archive old enrollments
+PUT http://localhost:5049/api/enrollments/archive-old
