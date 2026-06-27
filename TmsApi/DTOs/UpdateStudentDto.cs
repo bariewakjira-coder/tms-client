@@ -4,6 +4,7 @@ public class UpdateStudentDto
 {
     public string Name { get; set; } = "";
     public decimal GPA { get; set; }
+    public uint Version { get; set; }
 }
 
 

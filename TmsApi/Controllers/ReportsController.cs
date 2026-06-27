@@ -6,14 +6,14 @@ namespace TmsApi.Controllers;
 
 [ApiController]
 [Route("api/reports")]
-public class ReportsController(TmsDbContext context) : ControllerBase
+public class ReportsController(TmsDbContext db) : ControllerBase
 {
 
     // 1. Count active students with GPA >= 3.0
     [HttpGet("active-students")]
     public async Task<IActionResult> GetActiveStudents()
     {
-        var count = await context.Students
+        var count = await db.Students
             .Where(s => s.IsActive && s.GPA >= 3.0m)
             .CountAsync();
 
@@ -26,7 +26,7 @@ public class ReportsController(TmsDbContext context) : ControllerBase
     [HttpGet("popular-courses")]
     public async Task<IActionResult> GetPopularCourses()
     {
-        var list = await context.Courses
+        var list = await db.Courses
             .Select(c => new
             {
                 c.Title,
@@ -44,7 +44,7 @@ public class ReportsController(TmsDbContext context) : ControllerBase
     [HttpGet("average-gpa")]
     public async Task<IActionResult> GetAverageGpa()
     {
-        var list = await context.Enrollments
+        var list = await db.Enrollments
             .GroupBy(e => e.Course.Title)
             .Select(g => new
             {
@@ -62,7 +62,7 @@ public class ReportsController(TmsDbContext context) : ControllerBase
     [HttpGet("no-enrollments")]
     public async Task<IActionResult> GetStudentsWithoutEnrollments()
     {
-        var list = await context.Students
+        var list = await db.Students
             .Where(s => !s.Enrollments.Any())
             .Select(s => s.Name)
             .ToListAsync();
@@ -76,28 +76,30 @@ public class ReportsController(TmsDbContext context) : ControllerBase
 public async Task<IActionResult> NPlusOne(
     CancellationToken cancellationToken)
 {
-    var students = await context.Students
+   var students = await db.Students
+    .AsNoTracking()
+    .ToListAsync(cancellationToken);
+
+
+foreach (var s in students)
+{
+    // Query enrollment count for this student
+    // This creates 1 + N SQL queries
+
+    var count = await db.Enrollments
         .AsNoTracking()
-        .ToListAsync(cancellationToken);
-
-
-    foreach (var student in students)
-    {
-        var count = await context.Enrollments
-            .AsNoTracking()
-            .CountAsync(
-                e => e.StudentId == student.Id,
-                cancellationToken
-            );
-
-
-        Console.WriteLine(
-            $"{student.Name}: {count} enrollments"
+        .CountAsync(
+            e => e.StudentId == s.Id,
+            cancellationToken
         );
-    }
 
 
-    return Ok("Check console SQL logs");
+    Console.WriteLine(
+        $"{s.Name}: {count} enrollments"
+    );
+}
+    
+    return Ok(students);
 }
 
 
@@ -107,15 +109,24 @@ public async Task<IActionResult> NPlusOne(
 public async Task<IActionResult> StudentEnrollmentReport(
     CancellationToken cancellationToken)
 {
-    var report = await context.Students
-        .AsNoTracking()
-        .Select(s => new
-        {
-            s.Name,
-            EnrollmentCount = s.Enrollments.Count
-        })
-        .ToListAsync(cancellationToken);
+   var report = await db.Students
+    .AsNoTracking()
+    .Select(s => new
+    {
+        s.Name,
 
+        EnrollmentCount = s.Enrollments.Count
+    })
+    .ToListAsync(cancellationToken);
+
+
+
+foreach (var r in report)
+{
+    Console.WriteLine(
+        $"{r.Name}: {r.EnrollmentCount} enrollments"
+    );
+}
 
     return Ok(report);
 }

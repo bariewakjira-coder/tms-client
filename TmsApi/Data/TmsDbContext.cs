@@ -14,8 +14,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.ApplyConfigurationsFromAssembly(
         typeof(TmsDbContext).Assembly
     );
-    modelBuilder.Entity<Student>()
-    .HasQueryFilter(s => !s.IsDeleted);
+   
     
     modelBuilder.Entity<Enrollment>()
     .HasQueryFilter(e => !e.IsArchived);
@@ -30,8 +29,11 @@ public override async Task<int> SaveChangesAsync(
         if(entry.State == EntityState.Modified ||
            entry.State == EntityState.Added)
         {
-            entry.Property("LastUpdated")
-                 .CurrentValue = DateTime.UtcNow;
+             entry.Property("LastUpdated")
+            //      .CurrentValue = DateTime.UtcNow;
+            
+  
+  .CurrentValue = DateTime.Now;
         }
     }
 

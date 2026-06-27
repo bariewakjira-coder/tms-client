@@ -23,11 +23,13 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
 
         builder.Property(s => s.GPA)
             .HasPrecision(3,2);
-            
+      builder.Property<DateTime>("LastUpdated")
+    .HasColumnType("timestamp without time zone");
               builder.Property(s => s.Version)
            .IsRowVersion();
 
-           builder.Property<DateTime>("LastUpdated");
+           
+   
 
     }
 }
