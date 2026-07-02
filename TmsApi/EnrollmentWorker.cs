@@ -13,6 +13,7 @@
 //     public void ProcessBatch()
 //     {
 //         // Smoke test method placeholder
+using TmsApi.Services;
 //         Console.WriteLine("Processing background batch...");
 //     }
 // }
