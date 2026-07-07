@@ -37,14 +37,13 @@ public static class DataSeeder
         TmsDbContext context,
         CancellationToken ct = default)
     {
-        // Habit 1: MigrateAsync first
+        
         await context.Database.MigrateAsync(ct);
 
-        // Habit 2: Idempotency guard
+        
         if (await context.Courses.AnyAsync(ct))
             return;
 
-        // Habit 3: Deterministic data
         foreach (var (code, title, maxCapacity) in Courses)
         {
             context.Courses.Add(new Course

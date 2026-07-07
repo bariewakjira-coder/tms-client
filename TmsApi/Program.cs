@@ -30,6 +30,7 @@ builder.Services.AddDbContext<TmsDbContext>(options =>
 // CORE SERVICES (M4/M5 baseline — required by M6)
 // ═══════════════════════════════════════════════
 builder.Services.AddControllers();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<AuditLogFilter>();
@@ -86,7 +87,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Custom middleware — logs every request
-app.UseMiddleware<RequestLoggingMiddleware>();
+// app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseRouting();
