@@ -1,0 +1,92 @@
+@hostname = http://localhost:5049
+
+
+@ContentType = application/json
+
+
+###
+### Test Case 1: Anonymous Request (Should return 401 Unauthorized)
+GET {{hostname}}/api/assessments/results
+
+###
+
+### Test Case 2: Authenticated Request (Should return 200 OK with JSON)
+GET {{hostname}}/api/assessments/results
+X-Training-User: user1
+###
+### Test Case 3: Worker Smoke Test
+###
+GET {{hostname}}/api/enrollments/worker-smoke
+X-Training-User: user2
+###
+
+
+### 1. Create an Enrollment (POST)
+# This will generate a new record and return a 201 Created with a Location header.
+POST {{hostname}}/api/enrollments
+Content-Type: {{ContentType}}
+
+{
+  "studentId": "S-100",
+  "courseCode": "CS-101"
+}
+
+### 2. Get All Enrollments (GET)
+# Verify the record you just created exists in the system array.
+GET {{hostname}}/api/enrollments
+Accept: {{ContentType}}
+
+### 3. Trigger ProblemDetails Standardized Error (GET)
+# Exercise 6: This calls your broken route to verify the RFC 9457 JSON error payload shape.
+GET {{hostname}}/api/error
+Accept: application/problem+json
+
+### 4. Fetch a Non-Existent Record (GET 404)
+# Exercise 6: Verifies UseStatusCodePages() converts empty 404s into standard ProblemDetails shapes.
+GET {{hostname}}/api/enrollments/does-not-exist
+Accept: application/problem+json
+
+### Test Scalar UI in Dev Mode
+GET http://localhost:5049/scalar/v1
+
+### Test average gpa
+GET http://localhost:5049/api/reports/average-gpa
+Accept: application/json
+ 
+
+ 
+### Page 1
+GET http://localhost:5049/api/students?page=1
+Accept: application/json
+
+
+### Page 2
+GET http://localhost:5049/api/students?page=2
+Accept: application/json
+
+### popular courses
+GET http://localhost:5049/api/students/top-courses
+Accept: application/json
+
+
+### popular courses
+GET http://localhost:5049/api/reports/n-plus-one
+
+### popular courses
+GET http://localhost:5049/api/reports/student-enrollment-report
+
+### popular courses
+GET http://localhost:5049/api/students/1
+
+
+### popular courses
+PUT http://localhost:5049/api/students/1
+Content-Type: application/json
+
+{
+  "name": "Alice Updated",
+  "gpa": 4.0
+}
+
+### Archive old enrollments
+PUT http://localhost:5049/api/enrollments/archive-old

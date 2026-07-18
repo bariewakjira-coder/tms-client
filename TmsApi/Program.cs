@@ -87,7 +87,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Custom middleware — logs every request
-// app.UseMiddleware<RequestLoggingMiddleware>();
+ app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseRouting();
